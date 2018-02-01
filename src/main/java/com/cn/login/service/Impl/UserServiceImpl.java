@@ -32,7 +32,19 @@ public class UserServiceImpl implements UserService{
         }
     }
 
+    public void saveUser(User user) {
+        userDao.save(user);
+    }
+
     public List<User> findAllUser() {
         return userDao.findAllUser();
+    }
+
+    public List<User> getUserByDeptId(String deptId) {
+        return userDao.getUserByDeptId(deptId);
+    }
+
+    public User findUser(String userName){
+        return userDao.findUser(userName);
     }
 }

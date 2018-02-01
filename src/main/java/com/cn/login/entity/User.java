@@ -5,18 +5,14 @@ import java.io.Serializable;
 /**
  * Created by ddning on 2017/12/23.
  */
-// @Entity
-//@Table
 
-public class User /* implements Serializable*/ {
-
-    // @Id
-    // @GeneratedValue
+public class User {
 
     private String id;
     private String userName;
     private String password;
     private String lastTime;
+    private String deptId;
 
 
     public String getId() {
@@ -57,5 +53,13 @@ public class User /* implements Serializable*/ {
     public void setLastTime(String lastTime) {
 
         this.lastTime = lastTime;
+    }
+
+    public String getDeptId() {
+        return deptId;
+    }
+
+    public void setDeptId(String deptId) {
+        this.deptId = deptId;
     }
 }

@@ -32,10 +32,10 @@
                 <prop key="hibernate.format_sql">${hibernate.format_sql}</prop>
             </props>
         </property>
-        <property name="mappingLocations" value="classpath:com/cn/login/hibernate/User.hbm.xml">
-            <!--list>
+        <property name="mappingLocations">
+            <list>
                 <value>classpath:com/cn/login/hibernate/*.hbm.xml</value>
-            </list-->
+            </list>
         </property>
     </bean>
 

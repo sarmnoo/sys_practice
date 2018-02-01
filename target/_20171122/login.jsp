@@ -11,8 +11,6 @@
 <html>
 <head>
     <link rel="stylesheet" href="<%=request.getContextPath()%>/css/bootstrap.min.css">
-</head>
-
 <style>
     body{
         margin-left:auto;
@@ -25,35 +23,79 @@
     }
 </style>
 <script type="text/javascript" src="<%=request.getContextPath()%>/js/jquery-3.2.1.min.js"></script>
+<script type="text/javascript" src="<%=request.getContextPath()%>/js/md5.js"></script>
 <script>
     function check() {
-        var userName = document.getElementsByName("userName");
-        var password = $("#passWord").val();
-        console.log(userName);
-        console.log(password);
-        if(password.length <= 3){
-            alert("lll");
-            return false;
-        }
 
+//        var userName = $("#userName").val();
+        var password = $("#password").val();
+        $("#md5-password").val(password);
+//        var verifyCode = $("#verifyCode").val();
+
+        <%--$.ajax({--%>
+            <%--url:"<%=request.getContextPath()%>/login/checkUser.do",--%>
+            <%--dataType:"json",--%>
+            <%--data:{"userName":userName,"password":md5(password),"verifyCode":verifyCode},--%>
+            <%--traditional:true,--%>
+            <%--type:"POST",--%>
+            <%--success:function (data) {--%>
+                <%--alert(data);--%>
+            <%--}--%>
+        <%--});--%>
+
+//        $("#md5-password").val(md5(password));
         return $("#loginForm").submit();
     }
+
+    function changeVerify(){
+        var img = $("#verifyCodeImg");
+        //alert(img.attr("src"));
+        img.attr("src","<%=request.getContextPath()%>/login/genVerify.do?date="+new Date());
+    }
+
+    function register(){
+        var userName = $("#userName").val();
+        <%--alert(userName);--%>
+        <%--$.ajax({--%>
+            <%--url:"<%=request.getContextPath()%>/login/goRegister.do?userName="+userName,--%>
+            <%--type:"POST",--%>
+            <%--success:function (data) {--%>
+                <%----%>
+            <%--}--%>
+        <%--});--%>
+        window.location.href="<%=request.getContextPath()%>/login/goRegister.do?userName="+userName;
+    }
 </script>
+</head>
 <body>
-<form id="loginForm" action="<%=request.getContextPath()%>/login/loginUser.do" method="post" onsubmit="return check()">
+<form id="loginForm" action="<%=request.getContextPath()%>/login/checkUser.do" method="post" onsubmit="return check()">
 <div class="input-group">
     <span class="input-group-addon" id="basic-addon1">@</span>
-    <input name="userName" type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon1">
+    <input id="userName" name="userName" value="${userName}" type="text" class="form-control" placeholder="用户名" aria-describedby="basic-addon1"/>
 </div>
 <br>
 <!--下面是密码输入框-->
 <div class="input-group">
     <span class="input-group-addon" id="basic-addon2">@</span>
-    <input id="passWord" name="passWord" type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon1">
+    <input id="password"  type="password" class="form-control" placeholder="密码" aria-describedby="basic-addon1"/>
+    <input id="md5-password" name="password" type="hidden" />
 </div>
 <br>
+
+<!--下面是验证码输入框-->
+<div class="input-group">
+    <span class="input-group-addon" id="basic-addon3">@</span>
+    <input name="verifyCode"  type="text" class="form-control" placeholder="验证码"/>
+    <img id="verifyCodeImg" src="<%=request.getContextPath()%>/login/genVerify.do"/>
+    <a href="javascript:void(0);" onclick="javascript:changeVerify()" style="color:white;">看不清？</a>
+</div>
+<br>
+
+<span>${loginError}</span>
 <!--下面是登陆按钮,包括颜色控制-->
-<button type="submit" style="width:320px" class="btn btn-login">注 册</button>
+<button type="submit" style="width:320px" class="btn btn-login">登 陆</button>
+<a href="javascript:void(0);" onclick="javascript:register()" style="color:white;">去注册</a>
+
 </form>
 </body>
 </html>

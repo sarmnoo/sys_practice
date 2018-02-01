@@ -17,6 +17,9 @@
         <property name="lastTime" type="java.lang.String">
             <column name="lastTime" length="45"/>
         </property>
+        <property name="deptId" type="java.lang.String">
+            <column name="dept_id" length="45"/>
+        </property>
     </class>
 </hibernate-mapping>
 
