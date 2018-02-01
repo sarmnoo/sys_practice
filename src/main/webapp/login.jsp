@@ -29,7 +29,7 @@
 
 //        var userName = $("#userName").val();
         var password = $("#password").val();
-        $("#md5-password").val(password);
+        $("#md5-password").val(md5(password));
 //        var verifyCode = $("#verifyCode").val();
 
         <%--$.ajax({--%>

@@ -1,6 +1,7 @@
 package com.cn.login.controller;
 
 import com.cn.utils.HtmlUtils;
+import com.cn.utils.UUIDGenerator;
 import com.cn.utils.VerifyCodeUtils;
 import net.sf.json.*;
 import com.cn.login.entity.Department;
@@ -17,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.io.PrintWriter;
+import java.io.Serializable;
 import java.util.List;
 import java.util.UUID;
 
@@ -30,6 +32,7 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private DeptService deptService;
+    private UUIDGenerator uuidGenerator = new UUIDGenerator();
 
     @RequestMapping("index")
     public String index(HttpServletRequest request, HttpServletResponse response)
@@ -95,12 +98,23 @@ public class LoginController {
     @RequestMapping(value="registerUser")
     public String registerUser(HttpServletRequest request,HttpServletResponse response,User user){
         if(user != null){
-            UUID id = UUID.randomUUID();
-            user.setId(id.toString());
-            userService.saveUser(user);
+            User findUser = userService.findUser(user.getUserName());
+            if(findUser != null){
+                request.setAttribute("registerError","用户名已存在！");
+                return "pages/register";
+            }else{
+                Serializable id = uuidGenerator.generate();
+                user.setId(id.toString());
+                userService.saveUser(user);
+            }
+            request.setAttribute("userName",user.getUserName());
+            request.setAttribute("loginError","注册成功，请登录！");
+            return "login";
         }
-        request.setAttribute("userName",user.getUserName());
-        return "login";
+        else{
+            return "pages/register";
+        }
+
     }
 
     @RequestMapping(value="getDept")
