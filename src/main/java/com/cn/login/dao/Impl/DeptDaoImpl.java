@@ -18,6 +18,7 @@ public class DeptDaoImpl implements DeptDao {
     @Autowired
     private SessionFactory sessionFactory;
 
+
     public List<Department> query(String sql) {
         Session sq = sessionFactory.openSession();
         sq.beginTransaction();

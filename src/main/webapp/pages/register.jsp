@@ -18,7 +18,7 @@
             margin-TOP:100PX;
             width:20em;
             background-color: #fdc;
-        <%--background:#fff url(<%=request.getContextPath()%>/image/back.gif);--%>
+        <%--background:#fff url(<%=request.getContextPath()%>/images/back.gif);--%>
             /*background-size:100%;*/
         }
     </style>

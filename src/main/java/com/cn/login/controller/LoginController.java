@@ -1,9 +1,10 @@
 package com.cn.login.controller;
 
+import com.cn.blog.entity.Blog;
+import com.cn.common.service.CommonService;
 import com.cn.utils.HtmlUtils;
 import com.cn.utils.UUIDGenerator;
 import com.cn.utils.VerifyCodeUtils;
-import net.sf.json.*;
 import com.cn.login.entity.Department;
 import com.cn.login.entity.User;
 import com.cn.login.service.DeptService;
@@ -17,10 +18,9 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
-import java.io.PrintWriter;
 import java.io.Serializable;
+import java.util.Arrays;
 import java.util.List;
-import java.util.UUID;
 
 /**
  * Created by ddning on 2017/12/25.
@@ -32,12 +32,14 @@ public class LoginController {
     private UserService userService;
     @Autowired
     private DeptService deptService;
+    @Autowired
+    private CommonService commonService;
     private UUIDGenerator uuidGenerator = new UUIDGenerator();
 
     @RequestMapping("index")
     public String index(HttpServletRequest request, HttpServletResponse response)
     {
-        return "pages/index";
+        return "pages/index1";
     }
 
     @RequestMapping(value = "/json")
@@ -71,7 +73,19 @@ public class LoginController {
             request.setAttribute("loginError",loginError);
             return "login";
         }
-        return "pages/index";
+        request.getSession().setAttribute("USER_INFO",findUser);
+
+
+        String userId = findUser.getId();
+        String hql = "from Blog where userId=? and flag = '0' order by inputTime desc";
+        String hql2 = "from Blog where userId=? and flag = '1' order by inputTime desc";
+        List<String> parameter = Arrays.asList(userId);
+        List<Blog> blogList = commonService.query(hql,parameter);
+        List<Blog> excellentBlog = commonService.query(hql2,parameter);
+        //HtmlUtils.responseOutWithJson(response,blogList);
+        request.setAttribute("blogList",blogList);
+        request.setAttribute("excellentBlog",excellentBlog);
+        return "Admin/Public/framework";
     }
 
     @RequestMapping(value="loginUser")
@@ -85,7 +99,7 @@ public class LoginController {
             request.setAttribute("message","wrong");
             return "login";
         }
-        return "/pages/index";
+        return "/pages/main";
     }
 
     @RequestMapping(value="goRegister")
@@ -105,7 +119,8 @@ public class LoginController {
             }else{
                 Serializable id = uuidGenerator.generate();
                 user.setId(id.toString());
-                userService.saveUser(user);
+                //userService.saveUser(user);
+                commonService.add(user);
             }
             request.setAttribute("userName",user.getUserName());
             request.setAttribute("loginError","注册成功，请登录！");
