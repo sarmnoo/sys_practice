@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE hibernate-mapping PUBLIC "-//Hibernate/Hibernate Mapping DTD 3.0//EN"
+        "http://hibernate.sourceforge.net/hibernate-mapping-3.0.dtd">
+
+<hibernate-mapping package="com.cn.blog.entity">
+    <class name="Category" table="category">
+        <id name="id" type="java.lang.String">
+            <column name="id" length="45"/>
+            <generator class="assigned"/>
+        </id>
+        <property name="pid" type="java.lang.String">
+            <column name="pid" length="45"/>
+        </property>
+        <property name="name" type="java.lang.String">
+            <column name="category_name" length="45"/>
+        </property>
+        <property name="description" type="java.lang.String">
+            <column name="category_description" length="200"/>
+        </property>
+        <property name="status" type="java.lang.String">
+            <column name="category_status" length="45"/>
+        </property>
+        <property name="sort" type="java.lang.Integer">
+            <column name="category_sort" length="11"/>
+        </property>
+        <property name="icon" type="java.lang.String">
+            <column name="category_icon" length="45"/>
+        </property>
+        <property name="articleNum" type="java.lang.Integer">
+            <column name="article_num" length="45"/>
+        </property>
+        <property name="pName" type="java.lang.String">
+            <column name="pname" length="45"/>
+        </property>
+
+    </class>
+</hibernate-mapping>
+

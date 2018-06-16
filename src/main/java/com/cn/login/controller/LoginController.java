@@ -85,7 +85,7 @@ public class LoginController {
         //HtmlUtils.responseOutWithJson(response,blogList);
         request.setAttribute("blogList",blogList);
         request.setAttribute("excellentBlog",excellentBlog);
-        return "Admin/Public/framework";
+        return "Admin/blog/index";
     }
 
     @RequestMapping(value="loginUser")
